@@ -1,5 +1,12 @@
 // Online Java Compiler
 // Use this editor to write, compile and run your Java code online
+// learnt 
+// dfs
+// /bfs
+// degrees cncepts
+// union find vv imp
+
+
 import java.util.*;
 
 class Graph{
