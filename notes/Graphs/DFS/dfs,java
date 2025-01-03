@@ -1,0 +1,51 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Main {
+    static int cnt = 0; // Counter for connected components
+    static int[] visited;
+    static int[] components;
+
+    // DFS method
+    static void DFS(int src, List<Integer>[] graph) {
+        if (visited[src] == 1) return; // Node already visited
+        visited[src] = 1;
+        components[src] = cnt;
+        for (int neighbor : graph[src]) {
+            DFS(neighbor, graph);
+        }
+    }
+
+    public static void main(String[] args) {
+        int n = 6; // Number of nodes
+        List<Integer>[] graph = new ArrayList[n];
+        for (int i = 0; i < n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+
+        // Build the graph (undirected edges)
+        graph[0].add(1);
+        graph[1].add(0);
+        graph[2].add(3);
+        graph[3].add(2);
+        graph[3].add(4);
+        graph[4].add(3);
+
+        visited = new int[n];
+        components = new int[n];
+
+        // Count connected components
+        for (int i = 0; i < n; i++) {
+            if (visited[i] == 0) {
+                DFS(i, graph);
+                cnt++;
+            }
+        }
+
+        System.out.println("Number of connected components: " + cnt);
+        System.out.print("Components: ");
+        for (int i = 0; i < n; i++) {
+            System.out.print(components[i] + " ");
+        }
+    }
+}
