@@ -1,41 +1,24 @@
 class Solution {
     public int findCircleNum(int[][] isConnected) {
-        List<List<Integer>> adj = new ArrayList<>();
-        for(int i=0;i<isConnected.length;i++){
-            adj.add(new ArrayList<>());
-        }
-
-        for(int i=0;i<isConnected.length;i++){
-            for(int j=0;j<isConnected[0].length;j++){
-                if (isConnected[i][j]==1){
-                    adj.get(i).add(j);
-                    adj.get(j).add(i);
-                }
-            }
-        }
-
-        int pro = 0;
-        int[] visit = new int[isConnected.length];
-
-        for(int i=0;i<isConnected.length;i++){
-            for(int j=0;j<isConnected[0].length;j++){
-                if (isConnected[i][j]==1 && visit[i]==0){
-                    DFS(i,adj,visit);
-                    pro++;   
-                }
+        int n = isConnected.length;
+        int[] visit = new int[n];
+        int pro =0;
+        for(int i=0;i<n;i++){
+            if(visit[i]==0){
+                DFS(isConnected,i,visit);
+                pro +=1;
             }
         }
 
         return pro;
-
-
     }
 
-    void DFS(int node, List<List<Integer>> g, int[] visit){
-        visit[node] = 1;
-        for(int num : g.get(node)){
-            if(visit[num]==0){
-                DFS(num,g,visit);
+    void DFS(int[][] grid, int src, int[] visit){
+        visit[src] = 1;
+
+        for(int i=0;i<grid.length;i++){
+            if (grid[src][i]==1 && visit[i]==0){
+                DFS(grid,i,visit);
             }
         }
     }
