@@ -1,98 +1,71 @@
 //{ Driver Code Starts
-// Initial Template for Java
+// Initial template for JAVA
 
-import java.util.*;
-import java.lang.*;
 import java.io.*;
-
-// Position this line where user code will be pasted.
+import java.lang.*;
+import java.util.*;
 
 class GFG {
     public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        int T = sc.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine().trim());
         while (T-- > 0) {
-            int n = sc.nextInt();
-            int m = sc.nextInt();
-            int[][] grid = new int[n][m];
-
+            int n = Integer.parseInt(br.readLine().trim());
+            int[][] matrix = new int[n][n];
             for (int i = 0; i < n; i++) {
-
-                for (int j = 0; j < m; j++) {
-                    grid[i][j] = sc.nextInt();
+                String[] s = br.readLine().trim().split(" ");
+                for (int j = 0; j < n; j++) matrix[i][j] = Integer.parseInt(s[j]);
+            }
+            Solution obj = new Solution();
+            obj.shortestDistance(matrix);
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    System.out.print(matrix[i][j] + " ");
                 }
+                System.out.println();
             }
-            int[] source = new int[2];
-            for (int i = 0; i < 2; i++) {
-                int x = sc.nextInt();
-                source[i] = x;
-            }
-            int[] dest = new int[2];
-            for (int i = 0; i < 2; i++) {
-                int x = sc.nextInt();
-                dest[i] = x;
-            }
-            Solution ob = new Solution();
-            int ans = ob.shortestPath(grid, source, dest);
-            System.out.println(ans);
-        
-System.out.println("~");
-}
+
+            System.out.println("~");
+        }
     }
 }
+
 // } Driver Code Ends
 
 
-// User function Template for Java
+// User function template for JAVA
 
 class Solution {
-
-    int shortestPath(int[][] grid, int[] source, int[] destination) {
-
-        // Your code here
-        int N = grid.length;
-        int M = grid[0].length;
-        int src_R = source[0];
-        int src_C = source[1];
-        int des_R = destination[0];
-        int des_C = destination[1];
+    public void shortestDistance(int[][] mat) {
+        // Code here
+        int r = mat.length;
+        int c = mat[0].length;
         
-        if(grid[src_R][src_C] ==0 || grid[des_R][des_C] == 0){
-            return -1;
-        }
-        
-        PriorityQueue<int[]> pq = new PriorityQueue<>((x,y)-> x[0] - y[0]);
-        pq.offer(new int[] {src_R,src_C,0});
-        int[][] visit = new int[N][M];
-        visit[src_R][src_C] = 1;
-        
-        int[][] dir = new int[][] {{0,1},{0,-1},{1,0},{-1,0}};
-        
-        while (!pq.isEmpty()){
-            int[] curr = pq.poll();
-            int dis = curr[0];
-            int rr = curr[1];
-            int cc = curr[2];
-            
-            if(rr == des_R & cc == des_C){
-                return dis;
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(mat[i][j]== -1){
+                    mat[i][j] = (int)(1e9);
+                }
             }
             
+            mat[i][i] = 0;
+        }
         
-            
-            for(int i=0;i<4;i++){
-                int nx = rr + dir[i][0];
-                int ny = cc + dir[i][1];
-                
-                if(nx<0 || nx>=N|| ny<0 || ny>=M || grid[nx][ny] != 1 ||visit[nx][ny] != 0 ) continue;
-                visit[nx][ny] = 1;
-                int newdistance = dis + 1;
-            
-                pq.offer(new int[] {newdistance ,nx,ny});
-                
+        for(int k=0;k<r;k++){
+            for(int i=0;i<r;i++){
+                for(int j=0;j<c;j++){
+                    mat[i][j] = Math.min(mat[i][j], mat[i][k]+mat[k][j]);
+                }
             }
         }
         
-        return -1;
+        
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(mat[i][j] == (int)(1e9)){
+                    mat[i][j] = -1;
+                }
+            }
+        }
     }
 }
