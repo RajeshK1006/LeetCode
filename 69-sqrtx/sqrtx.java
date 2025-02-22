@@ -6,7 +6,7 @@ class Solution {
         while(l<=r){
             int  mid = l+ (r-l)/2;
 
-            if (mid * mid == x){
+            if ((long)mid * mid ==(long) x){
                 return  mid;
             }
             else if((long)mid * mid >(long) x){
