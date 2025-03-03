@@ -1,5 +1,5 @@
 #include <climits>  // For INT_MIN and INT_MAX
-#include <vector>
+
 #include <algorithm>  // For max function
 using namespace std;
 
