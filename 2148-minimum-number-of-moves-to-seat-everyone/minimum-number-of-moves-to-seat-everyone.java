@@ -1,0 +1,15 @@
+class Solution {
+    public int minMovesToSeat(int[] seats, int[] students) {
+        Arrays.sort(seats);
+        Arrays.sort(students);
+        System.out.println(Arrays.toString(seats));
+        System.out.println(Arrays.toString(students));
+
+        int diff = 0;
+        for(int i=0;i<seats.length;i++){
+            diff += Math.abs(seats[i] - students[i]);
+        }
+
+        return diff;
+    }
+}
